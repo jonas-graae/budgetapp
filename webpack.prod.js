@@ -1,7 +1,6 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const HtmlWebpackInlineSVGPlugin = require('html-webpack-inline-svg-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
@@ -29,19 +28,6 @@ module.exports = {
                 collapseWhitespace: false, //set true to minify and save space
                 removeComments: true //set true to remove comments and save space           
             }
-        }),
-
-        new HtmlWebpackInlineSVGPlugin({
-            img: path.resolve(__dirname, 'app/assets/images'),
-            inlineAll: true,
-            svgoConfig: [
-                {
-                    removeXMLNS: true
-                },
-                {
-                    cleanupIDs: true,
-                }    
-            ]
         }),
 
         new CleanWebpackPlugin()
@@ -75,11 +61,7 @@ module.exports = {
                 use: ['html-loader']
             },
             {
-                test: /\.svg$/i,
-                type: "asset/inline"
-            },
-            {
-                test: /\.(png|jpe?g|gif)$/i,
+                test: /\.(png|jpe?g|gif|svg)$/i,
                 type: "asset/resource"
             }
         ]
