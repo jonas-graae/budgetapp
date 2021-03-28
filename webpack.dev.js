@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
     mode: 'development',
@@ -8,7 +9,8 @@ module.exports = {
     entry: './app/assets/scripts/App.js',
     output: {
         filename: 'bundle.js',
-        path: path.resolve(__dirname, 'app')
+        path: path.resolve(__dirname, 'app'),
+        assetModuleFilename: 'images/[name][ext]'
     },
 
     devServer: {
@@ -32,23 +34,38 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: './app/index.html'
         }),
+
+        new MiniCssExtractPlugin()
     ],
 
     module: {
         rules: [
             {
+                test: /\.(png|jpe?g|gif|svg)$/i,
+                type: "asset/resource"
+            },
+            {
+                test: /\.(js|jsx)$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader'
+                }
+            },
+            {
                 test: /\.scss$/i,
                 exclude: /node_modules/,
                 use: [ 
                     'style-loader',
-                    'css-loader?url=false',   
-                    {
-                        loader: 'group-css-media-queries-loader'
-                    },
+                    'css-loader',   
+                    'group-css-media-queries-loader',
                     'sass-loader'
                 ],
-            }
+            },
             
         ]
     },
+
+    resolve: {
+        extensions: [".js", ".jsx"]
+    }
 }

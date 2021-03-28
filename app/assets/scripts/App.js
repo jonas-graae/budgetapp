@@ -1,7 +1,8 @@
+import ReactDOM from 'react-dom';
 import "../styles/globals.scss";
+import App from "./components/App";
 
-if(module.hot) {
-    module.hot.accept();
-}
 
-console.log("wup wup!")
+ReactDOM.render(<App />, document.getElementById('app'));
+
+console.log("hi from the file!")
