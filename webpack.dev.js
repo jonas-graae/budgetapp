@@ -5,12 +5,12 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports = {
     mode: 'development',
     devtool: 'source-map',
-
-    entry: './app/assets/scripts/App.js',
+    entry: './app/assets/scripts/redux/redux-expensify.js',
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'app'),
-        assetModuleFilename: 'images/[name][ext]'
+        assetModuleFilename: 'images/[name][ext]',
+        publicPath: '/'
     },
 
     devServer: {
@@ -19,6 +19,7 @@ module.exports = {
         },
 
         contentBase: path.join(__dirname, 'app'),
+        historyApiFallback: true,
         hot: true,
         port: 3000,
         host: '0.0.0.0'
